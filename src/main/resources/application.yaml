@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: spring-batch-aws-telemetry
+  cloud:
+    aws:
+      s3:
+        endpoint: http://localhost:9000
+        region: af-south-1
+        path-style-access-enabled: true
+        bucket: sales-info # prop is custom
+      credentials:
+        access-key:
+        secret-key:
+  batch:
+    job:
+      enabled: true
+    jdbc:
+      initialize-schema: always
+  datasource:
+    username: root
+    password: root
+    url: jdbc:postgresql://localhost:5432/sales
+  jpa:
+    hibernate:
+      ddl-auto: create
+

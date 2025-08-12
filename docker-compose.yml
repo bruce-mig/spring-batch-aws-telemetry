@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: postgres:17.5
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "sales"
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
+
+  minio:
+    image: quay.io/minio/minio:latest
+    container_name: minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: admin#1234
+    volumes:
+      - ~/minio/data:/data
+    command: server /data --console-address ":9001"

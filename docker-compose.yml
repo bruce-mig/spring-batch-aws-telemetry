@@ -1,14 +1,16 @@
 services:
   postgres:
+    container_name: postgres
     image: postgres:17.5
-    restart: always
+#    restart: always
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: "sales"
-      POSTGRES_USER: "root"
-      POSTGRES_PASSWORD: "root"
-      POSTGRES_HOST_AUTH_METHOD: "scram-sha-256"
+      POSTGRES_DB: $DB_NAME
+      POSTGRES_USER: $DB_USER
+      POSTGRES_PASSWORD: $DB_PASSWORD
+    networks:
+      - aws-net
 
   minio:
     image: quay.io/minio/minio:latest
@@ -17,8 +19,16 @@ services:
       - "9000:9000"
       - "9001:9001"
     environment:
-      MINIO_ROOT_USER: admin
-      MINIO_ROOT_PASSWORD: admin#1234
+      MINIO_ROOT_USER: $MINIO_ROOT_USER
+      MINIO_ROOT_PASSWORD: $MINIO_ROOT_PASSWORD
     volumes:
-      - ~/minio/data:/data
+      - minio-batch-data:/data
     command: server /data --console-address ":9001"
+    networks:
+      - aws-net
+
+volumes:
+  minio-batch-data:
+
+networks:
+  aws-net:

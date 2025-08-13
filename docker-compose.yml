@@ -27,8 +27,64 @@ services:
     networks:
       - aws-net
 
-volumes:
-  minio-batch-data:
+  zipkin:
+    image: ghcr.io/openzipkin/zipkin-slim:latest
+    container_name: zipkin
+    # Environment settings are defined here https://github.com/openzipkin/zipkin/blob/master/zipkin-server/README.md#environment-variables
+    environment:
+      - STORAGE_TYPE=mem
+      # Uncomment to enable self-tracing
+      # - SELF_TRACING_ENABLED=true
+      # Uncomment to increase heap size
+      # - JAVA_OPTS=-Xms128m -Xmx128m -XX:+ExitOnOutOfMemoryError
+    ports:
+      # Port used for the Zipkin UI and HTTP Api
+      - "9411:9411"
+    # Uncomment to enable debug logging
+    # command: --logging.level.zipkin2=DEBUG
+  prometheus:
+    image: prom/prometheus:v3.5.0
+    container_name: prometheus
+    ports:
+      - '9090:9090'
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - jaeger-example
+
+  push-gateway:
+    image: prom/pushgateway:v1.11.1
+    container_name: push-gateway
+    ports:
+      - '9091:9091'
+    networks:
+      - jaeger-example
+
+  grafana:
+    image: grafana/grafana:11.6.5
+    container_name: grafana
+    ports:
+      - '3000:3000'
+    networks:
+      - jaeger-example
+    depends_on:
+      - prometheus
+
+
 
 networks:
+  cloudservices:
+  jaeger-example:
   aws-net:
+
+volumes:
+  redis_data:
+    driver: local
+  prometheus-data:
+    driver: local
+  data: {}
+  kurrentdb-volume-data:
+  kurrentdb-volume-logs:
+  pg_data: {}
+  conduktor_data: {}
+  minio-batch-data:

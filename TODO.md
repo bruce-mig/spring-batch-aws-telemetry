@@ -5,8 +5,12 @@ For high-level tasks, see the "TODO" section in the [README.md](./README.md).
 
 ## Application Improvements
 
-- [ ] Monitoring with Prometheus & Grafana
-- [ ] Write Tests
+- [ ] Monitoring with Prometheus & Grafana  
+_Add dependencies: `spring-boot-starter-actuator` and `micrometer-registry-prometheus`._  
+_Expose metrics endpoint: set `management.endpoints.web.exposure.include=health,info,prometheus`._  
+_Run Prometheus and Grafana (docker-compose) and configure Prometheus to scrape the app’s `/actuator/prometheus` endpoint._  
+_Import a JVM/Spring dashboard in Grafana and set alerts as needed._  
+- [ ] Write Tests  
 
 ## Containerization
 

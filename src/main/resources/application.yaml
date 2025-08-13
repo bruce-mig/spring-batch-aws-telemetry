@@ -4,13 +4,13 @@ spring:
   cloud:
     aws:
       s3:
-        endpoint: http://localhost:9000
+        endpoint: ${MINIO_URL}
         region: af-south-1
         path-style-access-enabled: true
         bucket: sales-info # prop is custom
       credentials:
-        access-key:
-        secret-key:
+        access-key: ${MINIO_ACCESS_KEY}
+        secret-key: ${MINIO_SECRET_KEY}
   batch:
     job:
       enabled: true
@@ -19,7 +19,7 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:postgresql://localhost:5432/sales
+    url: ${DB_URL}
   jpa:
     hibernate:
       ddl-auto: create

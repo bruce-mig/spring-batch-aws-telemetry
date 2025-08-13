@@ -1,6 +1,6 @@
 spring:
   application:
-    name: spring-batch-aws-telemetry
+    name: export-sales
   cloud:
     aws:
       s3:
@@ -23,4 +23,22 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+
+# configure prometheus
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus  # not needed since  were using push gateway
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+        pushgateway:
+          enabled: true
+          address: localhost:9091
+          push-rate: 1ms
+          job: multipart-download
+      tags:
+        job-deprecated: false   #custom metrics
 

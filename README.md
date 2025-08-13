@@ -156,12 +156,6 @@ docker exec -it postgres psql -U "$DB_USER" -d "$DB_NAME" -c "select * from sale
 
 ### TODO — Monitoring with Prometheus & Grafana
 
-- Add dependencies: `spring-boot-starter-actuator` and `micrometer-registry-prometheus`.
-- Expose metrics endpoint: set `management.endpoints.web.exposure.include=health,info,prometheus`.
-- Run Prometheus and Grafana (docker-compose) and configure Prometheus to scrape the app’s `/actuator/prometheus` endpoint.
-- Import a JVM/Spring dashboard in Grafana and set alerts as needed.
-
-## TODO
 
 A comprehensive list of technical TODOs is maintained in [TODO.md](./TODO.md).
 

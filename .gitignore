@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 set-env.sh
 
+*.csv
 ### STS ###
 .apt_generated
 .classpath

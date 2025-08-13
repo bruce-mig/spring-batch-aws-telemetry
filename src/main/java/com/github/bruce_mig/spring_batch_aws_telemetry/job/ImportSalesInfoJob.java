@@ -39,7 +39,7 @@ public class ImportSalesInfoJob {
 
     @Bean
     public Job syncSalesJob(Step downloadFileStep, Step fromFileDownloadedToDb){
-        return new JobBuilder("sync-sales-job", jobRepository)
+        return new JobBuilder("export-sales", jobRepository)
                 .incrementer(new RunIdIncrementer())
                 .flow(downloadFileStep)
                 .next(fromFileDownloadedToDb)
